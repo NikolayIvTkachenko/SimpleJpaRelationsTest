@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rsh.testrelationtable.trt01.entity.Student;
 import com.rsh.testrelationtable.trt01.entity.Subject;
+import com.rsh.testrelationtable.trt01.entity.Teacher;
 import com.rsh.testrelationtable.trt01.repository.StudentRepository;
 import com.rsh.testrelationtable.trt01.repository.SubjectRepository;
+import com.rsh.testrelationtable.trt01.repository.TeacherRepository;
 
 
 
@@ -29,6 +31,9 @@ public class SubjectController {
 	@Autowired
 	StudentRepository studentRepository;
 	
+	@Autowired
+	TeacherRepository teacherRepository;
+	
 	
 	@GetMapping
 	List<Subject> getSubjects(){
@@ -40,8 +45,24 @@ public class SubjectController {
 		return subjectRepository.save(subject);
 	}
 	
+	@PutMapping("/{subjectId}/teachers/{teacherId}")
+	Subject enrollStudentToSubject(@PathVariable Long subjectId, @PathVariable Long teacherId) {
+		
+		Optional<Subject> subjectOptional = subjectRepository.findById(subjectId);
+		
+		Optional<Teacher> teacherOptional = teacherRepository.findById(teacherId);
+		
+		
+		Subject subject = subjectOptional.get();
+		Teacher teacher = teacherOptional.get();
+		
+		subject.enrollTeacher(teacher);
+		
+		return subjectRepository.save(subject);
+	}
+	
 	@PutMapping("/{subjectId}/students/{studentId}")
-	Subject enrollStudentToSubject(@PathVariable Long subjectId, @PathVariable Long studentId) {
+	Subject enrollTeacherToSubject(@PathVariable Long subjectId, @PathVariable Long studentId) {
 		
 		Optional<Subject> subjectOptional = subjectRepository.findById(subjectId);
 		
