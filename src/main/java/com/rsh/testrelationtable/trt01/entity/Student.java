@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "students")
 public class Student {
@@ -20,7 +22,7 @@ public class Student {
 	
 	private String name;
 	
-	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "enrolledStudents")
 	private Set<Subject> subjects = new HashSet<Subject>();
 	

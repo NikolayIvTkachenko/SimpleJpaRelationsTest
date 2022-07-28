@@ -46,6 +46,11 @@ public class Subject {
 	public Long getId() {
 		return id;
 	}
+
+	public void enrollStudent(Student student) {
+		enrolledStudents.add(student);
+		
+	}
 	
 	
 	
